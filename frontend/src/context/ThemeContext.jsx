@@ -9,8 +9,8 @@ export const ThemeProvider = ({ children }) => {
     if (saved) {
       return JSON.parse(saved)
     }
-    // Otherwise, check system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
+    // Default to light mode
+    return false
   })
 
   useEffect(() => {

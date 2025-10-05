@@ -47,6 +47,10 @@ const bookSchema = new mongoose.Schema({
     min: [1000, 'Published year must be valid'],
     max: [new Date().getFullYear(), 'Published year cannot be in the future']
   },
+  coverImage: {
+    type: String,
+    default: 'https://via.placeholder.com/400x600/4F46E5/ffffff?text=No+Cover'
+  },
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

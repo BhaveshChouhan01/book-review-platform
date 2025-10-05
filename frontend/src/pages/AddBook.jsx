@@ -11,7 +11,8 @@ const AddBook = () => {
     author: '',
     description: '',
     genre: '',
-    publishedYear: new Date().getFullYear()
+    publishedYear: new Date().getFullYear(),
+    coverImage: ''
   })
   const [errors, setErrors] = useState({})
 
@@ -81,7 +82,8 @@ const AddBook = () => {
         author: formData.author.trim(),
         description: formData.description.trim(),
         genre: formData.genre,
-        publishedYear: formData.publishedYear
+        publishedYear: formData.publishedYear,
+        coverImage: formData.coverImage.trim() || undefined
       })
       
       // Redirect to the newly created book's detail page
@@ -96,10 +98,10 @@ const AddBook = () => {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="card">
-        <div className="card-header">
-          <h1 className="text-2xl font-bold text-gray-800">Add New Book</h1>
-          <p className="text-gray-600 mt-2">Share a great book with the community</p>
+      <div className="card dark:bg-gray-800">
+        <div className="card-header dark:border-gray-700">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Add New Book</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Share a great book with the community</p>
         </div>
         
         <div className="card-body">
@@ -111,7 +113,7 @@ const AddBook = () => {
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Book Title *
               </label>
               <input
@@ -127,13 +129,13 @@ const AddBook = () => {
               {errors.title && (
                 <p className="text-red-500 text-sm mt-1">{errors.title}</p>
               )}
-              <p className="text-gray-500 text-sm mt-1">
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
                 {formData.title.length}/200 characters
               </p>
             </div>
 
             <div>
-              <label htmlFor="author" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="author" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Author *
               </label>
               <input
@@ -149,13 +151,13 @@ const AddBook = () => {
               {errors.author && (
                 <p className="text-red-500 text-sm mt-1">{errors.author}</p>
               )}
-              <p className="text-gray-500 text-sm mt-1">
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
                 {formData.author.length}/100 characters
               </p>
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Description *
               </label>
               <textarea
@@ -171,14 +173,14 @@ const AddBook = () => {
               {errors.description && (
                 <p className="text-red-500 text-sm mt-1">{errors.description}</p>
               )}
-              <p className="text-gray-500 text-sm mt-1">
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
                 {formData.description.length}/1000 characters
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="genre" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="genre" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Genre *
                 </label>
                 <select
@@ -199,7 +201,7 @@ const AddBook = () => {
               </div>
 
               <div>
-                <label htmlFor="publishedYear" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="publishedYear" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Published Year *
                 </label>
                 <input
@@ -219,7 +221,25 @@ const AddBook = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center pt-6 border-t">
+            <div>
+              <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Cover Image URL (optional)
+              </label>
+              <input
+                type="url"
+                id="coverImage"
+                name="coverImage"
+                value={formData.coverImage}
+                onChange={handleChange}
+                className="input"
+                placeholder="https://example.com/book-cover.jpg"
+              />
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                Paste a URL to a book cover image (leave blank for placeholder)
+              </p>
+            </div>
+
+            <div className="flex justify-between items-center pt-6 border-t dark:border-gray-700">
               <button
                 type="button"
                 onClick={() => navigate('/')}
