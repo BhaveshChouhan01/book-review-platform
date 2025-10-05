@@ -4,13 +4,19 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const initializeData = require('./initData');
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL || '*'
+    : 'http://localhost:3000',
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,9 +25,13 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/books', require('./routes/books'));
 app.use('/api/reviews', require('./routes/reviews'));
 
-// Basic route
+// Health check route
 app.get('/', (req, res) => {
-  res.json({ message: 'Book Review Platform API' });
+  res.json({ 
+    message: 'Book Review Platform API',
+    status: 'running',
+    environment: process.env.NODE_ENV 
+  });
 });
 
 // Error handling middleware
@@ -34,9 +44,7 @@ const PORT = process.env.PORT || 5000;
 
 // Connect to database and start server
 connectDB().then(async () => {
-  // Initialize sample data
   await initializeData();
-  
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
