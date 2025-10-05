@@ -11,7 +11,7 @@ const app = express();
 // CORS configuration for production
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? process.env.FRONTEND_URL || '*'
+    ? [process.env.FRONTEND_URL, 'https://book-review-frontend-8bctidvqh-bhaveshchouhans-projects.vercel.app/']
     : 'http://localhost:3000',
   credentials: true
 };
